@@ -1,0 +1,40 @@
+# Traductions de default.po
+# @license: CeCiLL V2 (http://www.cecill.info/licences/Licence_CeCILL_V2-fr.html)
+#
+msgid ""
+msgstr ""
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n>1);\n"
+
+# ==============================================================================
+
+msgid "Validate::alphaNumeric"
+msgstr "Veuillez entrer uniquement des caractères alpha-numériques"
+
+msgid "Validate::comparison"
+msgstr "Veuillez entrer une valeur %s %s"
+
+msgid "Validate::email"
+msgstr "Veuillez saisir une adresse de courrier électronique valide"
+
+msgid "Validate::inList"
+msgstr "Veuillez entrer une valeur parmi %s"
+
+msgid "Validate::maxLength"
+msgstr "Veuillez entrer au maximum %d caractères"
+
+msgid "Validate::minLength"
+msgstr "Veuillez entrer au moins %d caractères"
+
+msgid "Validate::range"
+msgstr "Veuillez entrer une valeur comprise entre %s et %s"
+
+msgid "Validate::url"
+msgstr "Veuillez entrer une URL valide"
+
+# ------------------------------------------------------------------------------
+
+msgid "Validate::notEmpty"
+msgstr "Champ obligatoire"

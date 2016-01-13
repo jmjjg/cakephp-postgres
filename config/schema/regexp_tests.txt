@@ -1,0 +1,3 @@
+\$this\->assert([^\(]+)\(Validation::([^\(]+)(\(.*\));
+AND cakephp_validate_$2( $3 ) = $1
+FIXME: problème de parenthèses en trop
