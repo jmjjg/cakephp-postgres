@@ -22,8 +22,6 @@ Assuming the plugin is installed under plugins/Postgres, add the following to co
 
 The following code should be added to your table classes, inside the initialize() method.
 
-The two behaviors are independant and can be loaded in any order.
-
 Note that NULL and boolean TRUE and are equivalent as configuration values.
 
     public function initialize(array $config)
