@@ -14,9 +14,19 @@ AutovalidateBehavior reads various informations from the database table schema..
 
 ## Setup
 
-Assuming the plugin is installed under plugins/Postgres, add the following to config/bootstrap.php:
+Assuming the plugin is installed under plugins/Postgres.
 
-    Plugin::load('Postgres', ['autoload' => true]);
+Add the following to config/bootstrap.php:
+```
+    Plugin::load('Postgres', ['autoload' => true, 'bootstrap' => true]);
+
+```
+
+And set the following in config/app.php
+```
+'Datasources.default.driver' => 'Postgres\Database\Driver\Postgres'
+'Datasources.test.driver' => 'Postgres\Database\Driver\Postgres'
+```
 
 ## Usage
 
@@ -44,6 +54,6 @@ Note that NULL and boolean TRUE and are equivalent as configuration values.
 
 ### Code quality
 ```bash
-sudo bash -c "( sudo bin/cake orm_cache clear ; rm logs/*.log ; rm -r logs/quality ; find tmp -type f ! -name 'empty' -exec rm {} \; )"
+sudo bash -c "( rm -r logs/quality ; find . -type f -regex '^\./\(logs/.*\.log\|tmp/.*\)$' ! -name 'empty' -exec rm {} \; )"
 sudo -u apache ant quality -f plugins/Postgres/vendor/Jenkins/build.xml
 ```
