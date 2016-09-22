@@ -180,9 +180,10 @@ class AutovalidateBehavior extends Behavior
      *
      * @return bool
      */
-    protected function useCache() {
+    protected function useCache()
+    {
         $result = $this->config('cache');
-        return $result === null ? Configure::read('debug') === false :  $result === true;
+        return $result === null ? Configure::read('debug') === false : $result === true;
     }
 
     /**

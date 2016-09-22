@@ -24,44 +24,54 @@ class MaintenanceShell extends Shell
     protected $connection = null;
 
     /**
-     * La constante à utiliser dans la méthode _stop() en cas de succès.
+     * The success value to use in the _stop method.
      */
     const SUCCESS = 0;
 
     /**
-     * La constante à utiliser dans la méthode _stop() en cas d'erreur.
+     * The general error value to use in the _stop method.
      */
     const ERROR = 1;
 
     /**
-     * Liste des sous-commandes et de leur description.
+     * Subcommands and their definitions.
      *
      * @var array
      */
     public $commands = [
         'sequences' => [
-            'help' => 'Mise à jour des compteurs des champs auto-incrémentés'
+            'help' => 'Set all sequence\'s current value to the lowest available field value.'
         ],
         'reindex' => [
-            'help' => 'Reconstruction des indexes'
+            'help' => 'Rebuild indexes.'
         ],
         'vacuum' => [
-            'help' => 'Nettoyage de la base de données et mise à jour des statistiques du planificateur'
+            'help' => 'Garbage-collect and analyze the database.'
         ],
         'cluster' => [
-            'help' => "Effectue toutes les opérations de maintenance ( reindex, sequence, vacuum )."
+            'help' => "Cluster all tables."
+        ],
+        'all' => [
+            'help' => "Executes all maintenance commands ( reindex, sequence, vacuum, cluster )."
         ]
     ];
 
     /**
-     * Liste des options et de leur description.
+     * All maintenance commands.
+     *
+     * @var array
+     */
+    public $all = ['sequences', 'reindex', 'vacuum', 'cluster'];
+
+    /**
+     * Options and their descriptions.
      *
      * @var array
      */
     public $options = [
         'connection' => [
             'short' => 'c',
-            'help' => 'Le nom de la connection à la base de données',
+            'help' => 'The name of the database connection',
             'default' => 'default',
         ]
     ];
@@ -78,15 +88,25 @@ class MaintenanceShell extends Shell
     }
 
     /**
-     * Executes all maintenance commands.
+     * Main function, errors with help.
      *
      * @return void
      */
     public function main()
     {
+        $this->_stop(self::ERROR);
+    }
+
+    /**
+     * Executes all maintenance commands.
+     *
+     * @return void
+     */
+    public function all()
+    {
         $success = true;
 
-        foreach (array_keys($this->commands) as $command) {
+        foreach ($this->all as $command) {
             $success = $success && $this->{$command}();
         }
 
@@ -114,7 +134,7 @@ class MaintenanceShell extends Shell
     }
 
     /**
-     * Rebuild indexes
+     * Rebuild indexes.
      *
      * @return bool
      */
@@ -125,13 +145,13 @@ class MaintenanceShell extends Shell
     }
 
     /**
-     * Mise à jour des compteurs des champs auto-incrémentés.
+     * Set all sequence's current value to the lowest available field value.
      *
      * @return bool
      */
     public function sequences()
     {
-        $this->out(sprintf('%s - %s', date('H:i:s'), 'sequences'));
+        $this->out(sprintf('%s - %s', date('H:i:s'), 'Set all sequence\'s current values'));
 
         $success = ($this->connection->begin() !== false);
 
@@ -159,9 +179,9 @@ class MaintenanceShell extends Shell
     }
 
     /**
-     * Nettoyage de la base de données et mise à jour des statistiques du planificateur
+     * Garbage-collect and analyze the database.
      *
-     * @url http://docs.postgresqlfr.org/8.4/maintenance.html (pas FULL)
+     * @url http://docs.postgresqlfr.org/8.4/maintenance.html
      *
      * @return bool
      */
@@ -173,6 +193,7 @@ class MaintenanceShell extends Shell
 
     /**
      * Cluster all tables.
+     *
      * @url http://www.postgresql.org/docs/8.4/interactive/sql-cluster.html
      * @return bool
      */
@@ -191,7 +212,7 @@ class MaintenanceShell extends Shell
     {
         $parser = parent::getOptionParser();
 
-        $parser->description('Script de maintenance de base de données PostgreSQL');
+        $parser->description('Maintenance script for PostgreSQL databases');
         $parser->addSubcommands($this->commands);
         $parser->addOptions($this->options);
 

@@ -58,18 +58,18 @@ class MaintenanceShellTest extends TestCase
     }
 
     /**
-     * Test the Postgres.MaintenanceShell::main() method.
+     * Test the Postgres.MaintenanceShell::all() method.
      *
      * @return void
      */
-    public function testMain()
+    public function testAll()
     {
         $this->Shell->startup();
-        $this->Shell->main();
+        $this->Shell->all();
 
         $output = implode("\n", $this->out->messages());
 
-        $expected = "/sequences/";
+        $expected = "/Set all sequence's current value/";
         $this->assertRegExp($expected, $output);
 
         $expected = "/REINDEX DATABASE \".*\";/";
@@ -95,7 +95,7 @@ class MaintenanceShellTest extends TestCase
 
         $output = implode("\n", $this->out->messages());
 
-        $expected = "/sequences/";
+        $expected = "/Set all sequence's current values/";
         $this->assertRegExp($expected, $output);
     }
 
@@ -151,7 +151,7 @@ class MaintenanceShellTest extends TestCase
     }
 
     /**
-     * Test the Postgres.MaintenanceShell --help
+     * Test the Postgres.MaintenanceShell --help command
      *
      * @return void
      */
@@ -162,10 +162,14 @@ class MaintenanceShellTest extends TestCase
 
         $output = implode("\n", $this->out->messages());
 
+
+        $expected = "/Maintenance script for PostgreSQL databases/";
+        $this->assertRegExp($expected, $output);
+
         $expected = "/\-\-connection, \-c/";
         $this->assertRegExp($expected, $output);
 
-        $expected = "/\(default: default\)/";
+        $expected = "/\(default:[ \n\t]+default\)/";
         $this->assertRegExp($expected, $output);
     }
 }

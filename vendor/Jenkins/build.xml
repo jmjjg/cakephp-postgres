@@ -6,6 +6,7 @@
 	<property name="dir.cakephp.app" value="${basedir}" />
 	<property name="dir.cakephp.plugin" value="${dir.cakephp.app}/plugins/Postgres" />
 	<property name="dir.cakephp.tmp" value="${dir.cakephp.app}/tmp" />
+    <property name="file.phpcs.ruleset" value="${dir.cakephp.plugin}/vendor/Jenkins/phpcs.xml" />
 	<property name="file.phpmd.ruleset" value="${dir.cakephp.plugin}/vendor/Jenkins/phpmd.xml" />
 	<property name="file.phpunit.config" value="${dir.cakephp.plugin}/vendor/Jenkins/phpunit.xml" />
 	<property name="ignorelist" value="*/tests/*,*/vendor/*" />
@@ -152,7 +153,9 @@
 		<exec executable="vendor/bin/phpcs"
 			  dir="${basedir}"
 			  failonerror="false">
-			<arg line="--standard=CakePHP
+			<arg line="--standard=${file.phpcs.ruleset}
+                       --extensions=php,ctp
+                       --runtime-set testVersion 5.6-7.0
                        --extensions=php,ctp
                        --report-checkstyle=${dir.ant.logs}/phpcs.xml
                        ${dir.cakephp.plugin}/src ${dir.cakephp.plugin}/tests" />
