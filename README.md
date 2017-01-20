@@ -17,15 +17,18 @@ AutovalidateBehavior reads various informations from the database table schema..
 Assuming the plugin is installed under plugins/Postgres.
 
 Add the following to config/bootstrap.php:
-```
+```php
     Plugin::load('Postgres', ['autoload' => true, 'bootstrap' => true]);
 
 ```
 
-And set the following in config/app.php
-```
-'Datasources.default.driver' => 'Postgres\Database\Driver\Postgres'
-'Datasources.test.driver' => 'Postgres\Database\Driver\Postgres'
+```php
+[
+    // ...
+    'Datasources.default.driver' => 'Postgres\Database\Driver\Postgres',
+    // ...
+    'Datasources.test.driver' => 'Postgres\Database\Driver\Postgres'
+    // ...
 ```
 
 ## Usage
@@ -33,7 +36,7 @@ And set the following in config/app.php
 The following code should be added to your table classes, inside the initialize() method.
 
 Note that NULL and boolean TRUE and are equivalent as configuration values.
-
+```php
     public function initialize(array $config)
     {
         // ...
@@ -51,6 +54,7 @@ Note that NULL and boolean TRUE and are equivalent as configuration values.
 		);
         // ...
     }
+```
 
 ### Code quality
 ```bash
