@@ -55,5 +55,5 @@ Note that NULL and boolean TRUE and are equivalent as configuration values.
 ### Code quality
 ```bash
 sudo bash -c "( rm -r logs/quality ; find . -type f -regex '^\./\(logs/.*\.log\|tmp/.*\)$' ! -name 'empty' -exec rm {} \; )"
-sudo -u apache ant quality -f plugins/Postgres/vendor/Jenkins/build.xml
+sudo -u apache ant quality -f vendor/jmjjg/cakephp3-postgres/vendor/Jenkins/build.xml
 ```
